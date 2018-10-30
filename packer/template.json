@@ -1,0 +1,32 @@
+{
+    "variables": {
+        "source_ami": "",
+        "region": "",
+        "token": ""
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "region": "{{user `region`}}",
+        "source_ami": "{{user `source_ami`}}",
+        "ssh_pty": true,
+        "instance_type": "t2.micro",
+        "ssh_username": "ec2-user",
+        "ssh_timeout": "5m",
+        "associate_public_ip_address": true,
+        "ami_virtualization_type": "hvm",
+        "ami_description": "Event Store Server Image (AWS-Optimized)",
+        "ami_name": "eventstore-{{isotime \"2006-01-02-1504\"}}"
+    }],
+    "provisioners": [
+        {
+            "type": "shell",
+            "start_retry_timeout": "10m",
+            "inline": [
+                "echo \"* hard nofile 20000\" | sudo tee -a /etc/security/limits.conf",
+                "echo \"* soft nofile 20000\" | sudo tee -a /etc/security/limits.conf",
+                "curl -s https://{{user `token`}}:@packagecloud.io/install/repositories/EventStore/EventStore-HA/script.rpm.sh | sudo bash",
+                "sudo yum install eventstore-aws-ha.x86_64 -y"
+            ]
+        }
+    ]
+}

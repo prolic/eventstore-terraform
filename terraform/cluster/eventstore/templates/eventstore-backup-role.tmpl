@@ -1,0 +1,47 @@
+{
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::${backup_bucket_name}/${region}/eventstore/${cluster_name}/",
+                "arn:aws:s3:::${backup_bucket_name}/${region}/eventstore/${cluster_name}/*"
+            ],
+            "Action": [ 
+                "s3:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::*",
+            "Action": [
+                "s3:ListAllMyBuckets"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::${backup_bucket_name}",
+                "arn:aws:s3:::${backup_bucket_name}/*"
+            ],
+            "Action": [
+                "s3:GetBucket*", 
+                "s3:List*" 
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Resource": [
+                "*"
+            ],
+            "Action": [ 
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstances",
+                "ec2:DescribeTags"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+variable "vpc_id" {}
+variable "vpc_name" {}
+variable "vpc_cidr_block" {}
+variable "ami" {}
+variable "instance_type" {}
+variable "nat_type" {}
+variable "key_name" {}
+variable "subnets" {}
+variable "availability_zones" {}
+variable "number_of_instances" {}
+variable "ingress_cidr_blocks" {}
